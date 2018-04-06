@@ -37,7 +37,23 @@ public class MapExampleTest {
     @Test
     public void setTest1() {
         RMap<String, Integer> map = redissionClient.getMap("myMap1");
-        // works faster than usual as it not returns previous value.
+        // Use RLocalCachedMap<String, Integer> if the map is used mostly for reading. It's x45 faster
+        //LocalCachedMapOptions options = LocalCachedMapOptions.defaults()
+        //        .cacheSize(10000)
+        //        .evictionPolicy(EvictionPolicy.LRU)
+        //        .maxIdle(10, TimeUnit.SECONDS)
+        //        .timeToLive(60, TimeUnit.SECONDS)
+        //        .invalidateEntryOnChange(true);
+        
+        
+        // data partitioning: support Cluster --> support Redisson Pro
+        
+        // Use RMapCache for config eviction
+        // eviction - allows to define time to live or max idle time for each map entry.
+        
+        //---------------------------******---------------------------------------------
+        
+        // fast* works faster than usual as it not returns previous value.
         map.fastPut("a1", 1);
         map.fastPut("a2", 2);
         map.fastPut("a3", 3);
