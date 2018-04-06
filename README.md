@@ -5,6 +5,6 @@ Redisson - distributed Java objects and services (Set, Multimap, SortedSet, Map,
 <dependency>
   <groupId>org.redisson</groupId>
   <artifactId>redisson</artifactId>
-  <version>3.1.0</version>
+  <version>3.6.3</version>
 </dependency>
-        ```
+        
