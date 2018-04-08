@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -26,6 +27,7 @@ public class BlockingQueueExampleTest {
 	public static void main(String[] args) throws InterruptedException {
 		redissionClient = Redisson.create();
 		threadPool = Executors.newCachedThreadPool();
+		final CountDownLatch latch = new CountDownLatch(2); // 2 threads 
 
 		// RQueue<String> queue = redissionClient.getQueue("myBlockingQueue");
 		RBlockingQueue<String> queue = redissionClient.getBlockingQueue("myBlockingQueue");
@@ -43,6 +45,7 @@ public class BlockingQueueExampleTest {
 						e.printStackTrace();
 					}
 				}
+				latch.countDown();
 			}
 		};
 
@@ -59,13 +62,14 @@ public class BlockingQueueExampleTest {
 						e.printStackTrace();
 					}
 				}
+				latch.countDown();
 			}
 		};
 
 		threadPool.execute(myRunnable2);
 		threadPool.execute(myRunnable);
 
-		Thread.sleep(5000);
+		latch.await();
 		queue.delete();
 		threadPool.shutdown();
 
