@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.redisson.Redisson;
 import org.redisson.api.RAtomicDouble;
-import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 
 /*
@@ -49,8 +48,8 @@ public class AtomicDoubleExampleTest {
 
     @After
     public void tearDown() {
-        RBucket<String> bucket = redissionClient.getBucket("myBucket");
-        bucket.delete();
+        RAtomicDouble atomicDouble = redissionClient.getAtomicDouble("myAtomicDouble");
+        atomicDouble.delete();
         redissionClient.shutdown();
     }
 }
