@@ -70,6 +70,7 @@ public class BlockingQueueExampleTest {
 		threadPool.execute(myRunnable);
 
 		latch.await();
+		System.out.println("All threads are done");
 		queue.delete();
 		threadPool.shutdown();
 
