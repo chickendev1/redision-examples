@@ -16,6 +16,12 @@ import org.redisson.api.RedissonClient;
 /**
  *
  * @author thanh.mai
+ * 
+ * Atomic: int current;
+			do {
+			  current = get();
+			} while(!compareAndSet(current, current + 1));
+ * --> Thread safe
  */
 public class AtomicLongExampleTest {
     private RedissonClient redissionClient;
